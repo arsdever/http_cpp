@@ -1,0 +1,16 @@
+﻿{
+  "configurations": [
+    {
+      "name": "dx64",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "cmakeToolchain": "c:/vcpkg/scripts/buildsystems/vcpkg.cmake"
+    }
+  ]
+}
