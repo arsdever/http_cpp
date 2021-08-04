@@ -1,9 +1,7 @@
-#include <array>
 #include <boost/asio.hpp>
 #include <boost/test/unit_test.hpp>
-#include <condition_variable>
-#include <mutex>
-#include <thread>
+
+#include <http/server_request_builder.h>
 
 using namespace boost::asio::ip;
 
@@ -23,20 +21,26 @@ BOOST_AUTO_TEST_CASE(connect_test)
 				return;
 			}
 		socket.async_connect(*it, [](boost::system::error_code const& ec) {
-			std::array<char, 2048> data_buf { 0 };
+			boost::asio::streambuf buffer;
+			boost::asio::streambuf req_buf;
+			std::ostream		   request_stm(&req_buf);
 
-			socket.async_read_some(boost::asio::buffer(data_buf.data(), data_buf.size()),
-								   [ &data_buf ](boost::system::error_code const& ec, size_t bytes_transferred) {
-									   if (ec)
-										   {
-											   std::cout << "ERROR: " << ec.message() << std::endl;
-											   return;
-										   }
+			http::server_request_builder req_builder;
+			http::server_request req { std::move(req_builder.with_method(http::request_method::RM_GET).build()) };
 
-									   std::cout.write(data_buf.data(), bytes_transferred).flush();
-									   ctx.stop();
-								   });
-			socket.write_some(boost::asio::buffer("GET / HTTP/1.1\r\n\r\n"));
+			socket.async_read_some(buffer, [ &buffer ](boost::system::error_code const& ec, size_t bytes_transferred) {
+				if (ec)
+					{
+						std::cout << "ERROR: " << ec.message() << std::endl;
+						return;
+					}
+
+				std::cout << std::istream(&buffer).rdbuf() << std::endl;
+				ctx.stop();
+			});
+
+			request_stm << req;
+			socket.write_some(req_buf);
 		});
 	});
 
