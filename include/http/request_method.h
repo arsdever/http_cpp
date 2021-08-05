@@ -15,7 +15,7 @@ namespace http
 		RM_CONNECT
 	};
 
-	std::string request_method_to_string(request_method method)
+	inline std::string request_method_to_string(request_method method)
 	{
 		switch (method)
 			{
@@ -31,7 +31,7 @@ namespace http
 			}
 	}
 
-	request_method request_method_from_string(std::string const& req)
+	inline request_method request_method_from_string(std::string const& req)
 	{
 		if (req == "OPTIONS")
 			{
@@ -69,7 +69,7 @@ namespace http
 		return request_method::RM_UNKNOWN;
 	}
 
-	std::ostream& operator<<(std::ostream& s, request_method const& m) { return s << request_method_to_string(m); }
+	inline std::ostream& operator<<(std::ostream& s, request_method const& m) { return s << request_method_to_string(m); }
 
-	bool operator==(request_method const& m, std::string const& s) { return m == request_method_from_string(s); }
+	inline bool operator==(request_method const& m, std::string const& s) { return m == request_method_from_string(s); }
 } // namespace http

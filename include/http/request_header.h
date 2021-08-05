@@ -53,7 +53,7 @@ namespace http
 			warning
 		};
 
-		static string_t header_key_to_string(known_header_enum const& h)
+		static inline string_t header_key_to_string(known_header_enum const& h)
 		{
 			switch (h)
 				{
@@ -102,7 +102,7 @@ namespace http
 				}
 		}
 
-		static known_header_enum header_key_from_string(string_t const& h)
+		static inline known_header_enum header_key_from_string(string_t const& h)
 		{
 			if (h == "A-IM")
 				{
@@ -287,7 +287,7 @@ namespace http
 		string_t __value;
 	};
 
-	std::ostream& operator<<(std::ostream& stm, request_header::known_header_enum const& header)
+	inline std::ostream& operator<<(std::ostream& stm, request_header::known_header_enum const& header)
 	{
 		return stm << request_header::header_key_to_string(header);
 	}

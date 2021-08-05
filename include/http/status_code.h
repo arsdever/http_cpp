@@ -69,7 +69,7 @@ namespace http
 		sc_network_authentication_required = 511,
 	};
 
-	std::ostream& operator<<(std::ostream& stm, status_code const& val)
+	inline std::ostream& operator<<(std::ostream& stm, status_code const& val)
 	{
 		switch (val)
 			{

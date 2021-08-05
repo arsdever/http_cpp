@@ -62,7 +62,7 @@ namespace http
 			x_frame_options,
 		};
 
-		static std::string header_key_to_string(known_header_enum header)
+		static inline std::string header_key_to_string(known_header_enum header)
 		{
 			switch (header)
 				{
@@ -118,7 +118,7 @@ namespace http
 				}
 		}
 
-		static known_header_enum header_key_from_string(std::string const& v)
+		static inline known_header_enum header_key_from_string(std::string const& v)
 		{
 			std::string val = v;
 			// std::string val = utilities::string_manip::to_lower(v);
@@ -237,7 +237,7 @@ namespace http
 		std::string __value;
 	};
 
-	std::ostream& operator<<(std::ostream& stm, response_header::known_header_enum const& header)
+	inline std::ostream& operator<<(std::ostream& stm, response_header::known_header_enum const& header)
 	{
 		return stm << response_header::header_key_to_string(header);
 	}

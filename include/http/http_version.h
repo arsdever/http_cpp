@@ -11,7 +11,7 @@ namespace http
 		http_20 = 20,
 	};
 
-	std::ostream& operator<<(std::ostream& stm, http_version const& val)
+	inline std::ostream& operator<<(std::ostream& stm, http_version const& val)
 	{
 		switch (val)
 			{

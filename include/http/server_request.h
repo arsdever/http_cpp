@@ -29,7 +29,7 @@ namespace http
 		friend std::ostream& operator<<(std::ostream& os, server_request const& req)
 		{
 			return os << request_method_to_string(req.method()) << ' ' << '/' << ' ' << "HTTP/1.1"
-			   << "\r\n\r\n";
+					  << "\r\n\r\n";
 		}
 
 	private:

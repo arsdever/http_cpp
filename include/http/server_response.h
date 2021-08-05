@@ -24,6 +24,20 @@ namespace http
 		{
 		}
 
+		server_response(server_response const& r)
+			: __http_version { r.__http_version }, __status_code { r.__status_code },
+			  __status_message { r.__status_message }, __headers { r.__headers }, __body { r.__body }
+		{
+		}
+
+		server_response(server_response&& r)
+			: __http_version { std::move(r.__http_version) }, __status_code { std::move(r.__status_code) },
+			  __status_message { std::move(r.__status_message) }, __headers { std::move(r.__headers) }, __body {
+				  std::move(r.__body)
+			  }
+		{
+		}
+
 		server_response(http_version_t ver, status_code_t sc, string_t sm, headers_t hs, body_t b)
 			: __http_version { ver }, __status_code { sc }, __status_message { sm }, __headers { hs }, __body { b }
 		{
