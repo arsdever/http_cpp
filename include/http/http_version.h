@@ -16,10 +16,10 @@ namespace http
 		switch (val)
 			{
 			case http_version::unknown: return stm << "unknown";
-			case http_version::http_09: return stm << "http_09";
-			case http_version::http_10: return stm << "http_10";
-			case http_version::http_11: return stm << "http_11";
-			case http_version::http_20: return stm << "http_20";
+			case http_version::http_09: return stm << "HTTP/0.9";
+			case http_version::http_10: return stm << "HTTP/1.0";
+			case http_version::http_11: return stm << "HTTP/1.1";
+			case http_version::http_20: return stm << "HTTP/2.0";
 			default: return stm;
 			}
 	}
