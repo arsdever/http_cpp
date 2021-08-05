@@ -24,24 +24,24 @@ namespace http
 
 		header_t operator[](std::string const& key_string) const { return __map.find(key_string)->second; }
 
-		header_t operator[](header_t::known_header_enum key)
-		{
-			return operator[](header_t::header_key_to_string(key));
-		}
+		header_t operator[](header_t::known_header_enum key) { return operator[](header_t::header_key_to_string(key)); }
 
 		header_t operator[](header_t::known_header_enum key) const
 		{
 			return operator[](header_t::header_key_to_string(key));
 		}
 
-		header_t operator[](int key)
-		{
-			return operator[](static_cast<header_t::known_header_enum>(key));
-		}
+		header_t operator[](int key) { return operator[](static_cast<header_t::known_header_enum>(key)); }
 
-		header_t operator[](int key) const
+		header_t operator[](int key) const { return operator[](static_cast<header_t::known_header_enum>(key)); }
+
+		inline friend std::ostream& operator<<(std::ostream& stm, headers<header_t> const& h)
 		{
-			return operator[](static_cast<header_t::known_header_enum>(key));
+			for (auto const& i : h.__map)
+				{
+					stm << i.second;
+				}
+			return stm;
 		}
 
 		size_t count() const { return __map.size(); }

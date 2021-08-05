@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_CASE(connect_test)
 		socket.async_connect(*it, [](boost::system::error_code const& ec) {
 			std::ostream				 request_stm(&obuffer);
 			http::server_request_builder req_builder;
-			http::server_request req { std::move(req_builder.with_method(http::request_method::RM_GET).build()) };
+			http::server_request req { std::move(req_builder.with_method(http::request_method::RM_GET).with_http_version(http::http_version::http_11).with_path("/").build()) };
 			boost::asio::streambuf::mutable_buffers_type mbuffer = ibuffer.prepare(4096);
 			socket.async_read_some(mbuffer, [](boost::system::error_code const& ec, size_t bytes_transferred) {
 				if (ec)

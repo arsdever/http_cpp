@@ -282,10 +282,17 @@ namespace http
 		inline string_t key() const { return __key; }
 		inline string_t value() const { return __value; }
 
+		friend std::ostream& operator<<(std::ostream& stm, request_header const& header);
+
 	private:
 		string_t __key;
 		string_t __value;
 	};
+
+	inline std::ostream& operator<<(std::ostream& stm, request_header const& header)
+	{
+		return stm << header.key() << ": " << header.value() << "\r\n";
+	}
 
 	inline std::ostream& operator<<(std::ostream& stm, request_header::known_header_enum const& header)
 	{
