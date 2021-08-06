@@ -56,10 +56,16 @@ namespace http
 			tb = it;
 
 			parse_headers(tb, dend);
+			__builder.with_http_version(ver).with_status_code(sc).with_status_message(sm);
 
-			std::string body = std::string(tb, dend);
-
-			__builder.with_http_version(ver).with_status_code(sc).with_status_message(sm).with_body(body);
+			if (__should_parse_body)
+				{
+					std::string body = std::string(tb, dend);
+					if (body.size() == __body_length)
+						{
+							__builder.with_body(body);
+						}
+				}
 		}
 
 		builder_t builder() const { return __builder; }
@@ -72,7 +78,19 @@ namespace http
 			builder_t::headers_t headers;
 			std::string			 hk;
 			std::string			 hv;
-			bool				 fin = false;
+			bool				 fin		 = false;
+			auto				 push_header = [ & ](response_header&& hdr) {
+				if (hdr.key() == response_header::known_header_enum::content_length ||
+					hdr.key() == response_header::known_header_enum::transfer_encoding)
+					{
+						__should_parse_body = true;
+					}
+				if (hdr.key() == response_header::known_header_enum::content_length)
+					{
+						__body_length = std::stoi(hdr.value());
+					}
+				__builder.with_header(hdr);
+			};
 
 			hk.reserve(255);
 			hv.reserve(1024);
@@ -104,7 +122,8 @@ namespace http
 
 					if (fin)
 						{
-							__builder.with_header({ hk, hv });
+							response_header hdr { hk, hv };
+							push_header(std::move(hdr));
 							hk	= "";
 							hv	= "";
 							fin = false;
@@ -139,7 +158,8 @@ namespace http
 				}
 
 			tb = it;
-			__builder.with_header({ hk, hv });
+			response_header hdr { hk, hv };
+			push_header(std::move(hdr));
 		}
 
 		template <typename iterator_t>
@@ -185,5 +205,7 @@ namespace http
 
 	private:
 		builder_t __builder;
+		bool	  __should_parse_body;
+		size_t	  __body_length;
 	};
 } // namespace http

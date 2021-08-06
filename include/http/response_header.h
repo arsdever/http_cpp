@@ -237,6 +237,11 @@ namespace http
 		std::string __value;
 	};
 
+	inline bool operator==(std::string const& hdr, response_header::known_header_enum const& khdr)
+	{
+		return response_header::header_key_from_string(hdr) == khdr;
+	}
+
 	inline std::ostream& operator<<(std::ostream& stm, response_header::known_header_enum const& header)
 	{
 		return stm << response_header::header_key_to_string(header);
