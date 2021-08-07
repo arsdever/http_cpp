@@ -14,7 +14,7 @@ boost::asio::streambuf	obuffer;
 BOOST_AUTO_TEST_CASE(connect_test)
 {
 	tcp::resolver				resolver { ctx };
-	tcp::resolver::results_type resolve_result = resolver.resolve("google.com", "80");
+	tcp::resolver::results_type resolve_result = resolver.resolve("httpbin.org", "80");
 	ctx.post([]() {});
 	ctx.run();
 	BOOST_CHECK(!resolve_result.empty());
@@ -30,6 +30,7 @@ BOOST_AUTO_TEST_CASE(connect_test)
 	http::server_request						 req { std::move(req_builder.with_method(http::request_method::RM_GET)
 											 .with_http_version(http::http_version::http_11)
 											 .with_path("/")
+											 .with_header({ http::request_header::known_header_enum::host, "httpbin.org" })
 											 .build()) };
 	boost::asio::streambuf::mutable_buffers_type mbuffer = ibuffer.prepare(4096);
 	request_stm << req;
