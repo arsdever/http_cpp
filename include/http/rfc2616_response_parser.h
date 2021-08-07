@@ -18,7 +18,7 @@ namespace http
 		using builder_t = server_response_builder;
 
 	public:
-		rfc2616_response_parser() : __builder {} { }
+		rfc2616_response_parser() : __builder {}, __should_parse_body { false }, __body_length { 0 } { }
 
 		template <typename iterator_t>
 		void parse(iterator_t const& dbegin, iterator_t const& dend)
