@@ -277,6 +277,7 @@ namespace http
 		request_header() : __key {}, __value {} { }
 		request_header(request_header const& o) : __key { o.__key }, __value { o.__value } { }
 		request_header(request_header&& o) : __key { o.__key }, __value { o.__value } { }
+		request_header(known_header_enum const& key, string_t const& value) : __key { std::move(header_key_to_string(key)) }, __value { value } { }
 		request_header(string_t const& key, string_t const& value) : __key { key }, __value { value } { }
 
 		inline string_t key() const { return __key; }
