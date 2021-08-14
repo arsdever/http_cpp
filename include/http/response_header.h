@@ -1,11 +1,15 @@
 #pragma once
 
+#include <http/utilities/default_value_type_caster.h>
 #include <http/utilities/string_manip.h>
 
 namespace http
 {
 	class response_header
 	{
+	public:
+		using string_t = std::string;
+
 	public:
 #pragma region known_header_enum
 
@@ -62,7 +66,7 @@ namespace http
 			x_frame_options,
 		};
 
-		static inline std::string header_key_to_string(known_header_enum header)
+		static inline string_t header_key_to_string(known_header_enum header)
 		{
 			switch (header)
 				{
@@ -118,10 +122,10 @@ namespace http
 				}
 		}
 
-		static inline known_header_enum header_key_from_string(std::string const& v)
+		static inline known_header_enum header_key_from_string(string_t const& v)
 		{
-			std::string val = v;
-			// std::string val = utilities::string_manip::to_lower(v);
+			string_t val = v;
+			// string_t val = utilities::string_manip::to_lower(v);
 			if (val == "Accept-CH")
 				return known_header_enum::accept_ch;
 			else if (val == "Accept-Patch")
@@ -227,14 +231,16 @@ namespace http
 		response_header() : __key {}, __value {} { }
 		response_header(response_header const& o) : __key { o.__key }, __value { o.__value } { }
 		response_header(response_header&& o) : __key { o.__key }, __value { o.__value } { }
-		response_header(std::string key, std::string value) : __key { key }, __value { value } { }
+		response_header(string_t key, string_t value) : __key { key }, __value { value } { }
 
-		inline std::string key() const { return __key; }
-		inline std::string value() const { return __value; }
+		inline string_t key() const { return __key; }
+		template <typename value_t = string_t, template <typename S, typename V> typename caster = default_value_caster>
+		requires value_caster_concept<string_t, value_t, caster>
+		inline value_t value() const { return caster<string_t, value_t>::cast(__value); }
 
 	private:
-		std::string __key;
-		std::string __value;
+		string_t __key;
+		string_t __value;
 	};
 
 	inline bool operator==(std::string const& hdr, response_header::known_header_enum const& khdr)

@@ -51,7 +51,7 @@ namespace http
 
 		inline size_t content_length() const
 		{
-			return __headers.has("Content-Length") ? std::stoi(__headers[ "Content-Length" ].value())
+			return __headers.has("Content-Length") ? __headers[ "Content-Length" ].value<int>()
 												   : static_cast<size_t>(-1);
 		}
 
