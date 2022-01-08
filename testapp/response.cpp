@@ -1,4 +1,4 @@
-#include <http/rfc2616_response_parser.h>
+#include <http/standards/rfc2616.h>
 #include <http/server_response_builder.h>
 #include <http/stdafx.h>
 #include <http/ti_response_parser.h>

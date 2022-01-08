@@ -12,13 +12,13 @@ constexpr auto LF			  = '\n';
 
 namespace http
 {
-	class rfc2616_response_parser
+	class rfc2616_response_parser_impl
 	{
 	public:
 		using builder_t = server_response_builder;
 
 	public:
-		rfc2616_response_parser() : __builder {} { }
+		rfc2616_response_parser_impl() : __builder {} { }
 
 		template <typename iterator_t>
 		void parse(iterator_t const& dbegin, iterator_t const& dend)
