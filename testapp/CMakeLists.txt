@@ -1,15 +1,8 @@
-cmake_minimum_required (VERSION 3.8)
-
-file(GLOB_RECURSE HEADERS ${CMAKE_SOURCE_DIR}/include/*.h)
-
-enable_testing()
-
-add_executable(test "testmain.cpp" "response.cpp" "request.cpp" ${HEADERS} "http_server.cpp")
 find_package (Boost COMPONENTS unit_test_framework)
-target_include_directories(test PRIVATE ${BOOST_INCLUDE_DIRS})
 
-add_test(NAME test COMMAND test)
+include (BoostTestHelpers)
 
-target_link_libraries(test ${Boost_LIBRARIES})
-target_include_directories(test PUBLIC ${CMAKE_SOURCE_DIR}/include ${Boost_INCLUDE_DIR})
-target_precompile_headers(test PUBLIC ${CMAKE_SOURCE_DIR}/include/http/stdafx.h)
+create_boost_test(MODULE_NAME http_test SOURCES "testmain.cpp" "response.cpp" "request.cpp" "http_server.cpp")
+target_link_libraries(http_test PUBLIC ${Boost_LIBRARIES})
+target_include_directories(http_test PUBLIC ${CMAKE_SOURCE_DIR}/include ${Boost_INCLUDE_DIRS})
+target_precompile_headers(http_test PUBLIC ${CMAKE_SOURCE_DIR}/include/http/stdafx.h)
