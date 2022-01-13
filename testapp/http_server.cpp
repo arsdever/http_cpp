@@ -2,6 +2,7 @@
 #include <boost/asio.hpp>
 #include <boost/test/unit_test.hpp>
 #include <condition_variable>
+#include <http/impl/boost/boost.h>
 #include <mutex>
 #include <thread>
 
@@ -41,6 +42,13 @@ BOOST_AUTO_TEST_CASE(connect_test)
 	});
 
 	ctx.run();
+}
+
+BOOST_AUTO_TEST_CASE(server_start)
+{
+	http::boost_server server;
+	server.start(8080);
+	BOOST_CHECK_EQUAL(server.started(), true);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
