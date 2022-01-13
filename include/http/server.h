@@ -9,7 +9,7 @@ namespace http
 		using impl_t = backend_t::server_impl_t;
 
 	public:
-		void start(short port) { __backend.start(port); }
+		void start(unsigned short port) { __backend.start(port); }
 
 		bool started() { return __backend.started(); }
 
