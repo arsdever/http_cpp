@@ -6,41 +6,41 @@
 
 namespace http
 {
-	class server_response_builder
+	class rfc2616_response_builder_impl
 	{
 	public:
+		using string_t		 = std::string;
 		using http_version_t = http_version;
 		using status_code_t	 = status_code;
-		using string_t		 = std::string;
 		using headers_t		 = headers<response_header>;
 		using body_t		 = string_t;
 
 	public:
-		server_response_builder& with_http_version(http_version_t const& v)
+		rfc2616_response_builder_impl& with_http_version(http_version_t const& v)
 		{
 			__http_version = v;
 			return *this;
 		}
 
-		server_response_builder& with_status_code(status_code_t const& sc)
+		rfc2616_response_builder_impl& with_status_code(status_code_t const& sc)
 		{
 			__status_code = sc;
 			return *this;
 		}
 
-		server_response_builder& with_status_message(string_t const& sm)
+		rfc2616_response_builder_impl& with_status_message(string_t const& sm)
 		{
 			__status_message = sm;
 			return *this;
 		}
 
-		server_response_builder& with_header(response_header const& header)
+		rfc2616_response_builder_impl& with_header(response_header const& header)
 		{
 			__headers.add(header);
 			return *this;
 		}
 
-		server_response_builder& with_body(string_t const& body)
+		rfc2616_response_builder_impl& with_body(string_t const& body)
 		{
 			__body = body;
 			return *this;

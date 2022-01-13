@@ -1,7 +1,8 @@
 #pragma once
 
+#include <http/response_builder.h>
 #include <http/response_parser_exception.h>
-#include <http/server_response_builder.h>
+#include <http/standards/rfc2616_response_builder_impl.h>
 #include <iterator>
 
 constexpr auto LINEBREAK_SIZE = 2;
@@ -12,13 +13,13 @@ constexpr auto LF			  = '\n';
 
 namespace http
 {
-	class rfc2616_response_parser
+	class rfc2616_response_parser_impl
 	{
 	public:
-		using builder_t = server_response_builder;
+		using builder_t = rfc2616_response_builder_impl;
 
 	public:
-		rfc2616_response_parser() : __builder {} { }
+		rfc2616_response_parser_impl() : __builder {} { }
 
 		template <typename iterator_t>
 		void parse(iterator_t const& dbegin, iterator_t const& dend)
