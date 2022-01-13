@@ -1,5 +1,5 @@
 #include <http/standards/rfc2616.h>
-#include <http/server_response_builder.h>
+#include <http/response_builder.h>
 #include <http/stdafx.h>
 #include <http/ti_response_parser.h>
 

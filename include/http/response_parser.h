@@ -1,7 +1,7 @@
 #pragma once
 
+#include <http/response_builder.h>
 #include <http/response_parser_exception.h>
-#include <http/server_response_builder.h>
 
 namespace http
 {
@@ -9,8 +9,8 @@ namespace http
 	class response_parser
 	{
 	public:
-		using parser_t	= standard_t::parser_t;
-		using builder_t = server_response_builder;
+		using parser_t	= standard_t::response_parser_impl_t;
+		using builder_t = standard_t::response_builder_impl_t;
 
 	public:
 		response_parser() : __impl {} { }
