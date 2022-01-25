@@ -2,6 +2,7 @@
 #include <boost/asio.hpp>
 #include <boost/test/unit_test.hpp>
 #include <condition_variable>
+#include <http/impl/boost/boost.h>
 #include <mutex>
 #include <thread>
 
@@ -41,6 +42,33 @@ BOOST_AUTO_TEST_CASE(connect_test)
 	});
 
 	ctx.run();
+}
+
+BOOST_AUTO_TEST_CASE(server_start)
+{
+	http::boost_server server;
+	server.start(8080);
+	BOOST_CHECK_EQUAL(server.started(), true);
+	http::boost_static_context::terminate();
+}
+
+BOOST_AUTO_TEST_CASE(server_accept)
+{
+	http::boost_server server;
+	server.start(35000);
+
+	int peers_joined = 0;
+	server.on_peer_joined([ &peers_joined ] { ++peers_joined; });
+	boost::asio::io_context ctx;
+	tcp::endpoint			ep = tcp::endpoint { boost::asio::ip::address::from_string("127.0.0.1"), 35000 };
+	tcp::socket				s { ctx };
+
+	error_code ec;
+	s.connect(ep, ec);
+	std::string msg = ec.message();
+
+	BOOST_CHECK(peers_joined > 0);
+	http::boost_static_context::terminate();
 }
 
 BOOST_AUTO_TEST_SUITE_END()
