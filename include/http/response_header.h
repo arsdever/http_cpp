@@ -62,7 +62,7 @@ namespace http
 			x_frame_options,
 		};
 
-		static std::string header_key_to_string(known_header_enum header)
+		static constexpr std::string_view header_key_to_string(known_header_enum header)
 		{
 			switch (header)
 				{
@@ -118,105 +118,103 @@ namespace http
 				}
 		}
 
-		static known_header_enum header_key_from_string(std::string const& v)
+		static known_header_enum header_key_from_string(std::string_view v)
 		{
-			std::string val = v;
-			// std::string val = utilities::string_manip::to_lower(v);
-			if (val == "Accept-CH")
+			if (v == "Accept-CH")
 				return known_header_enum::accept_ch;
-			else if (val == "Accept-Patch")
+			else if (v == "Accept-Patch")
 				return known_header_enum::access_control_allow_origin;
-			else if (val == "Accept-Ranges")
+			else if (v == "Accept-Ranges")
 				return known_header_enum::access_control_allow_credentials;
-			else if (val == "Access-Control-Allow-Credentials,")
+			else if (v == "Access-Control-Allow-Credentials,")
 				return known_header_enum::access_control_expose_headers;
-			else if (val == "Access-Control-Allow-Headers")
+			else if (v == "Access-Control-Allow-Headers")
 				return known_header_enum::access_control_max_age;
-			else if (val == "Access-Control-Allow-Methods,")
+			else if (v == "Access-Control-Allow-Methods,")
 				return known_header_enum::access_control_allow_methods;
-			else if (val == "Access-Control-Allow-Origin,")
+			else if (v == "Access-Control-Allow-Origin,")
 				return known_header_enum::access_control_allow_headers;
-			else if (val == "Access-Control-Expose-Headers,")
+			else if (v == "Access-Control-Expose-Headers,")
 				return known_header_enum::accept_patch;
-			else if (val == "Access-Control-Max-Age,")
+			else if (v == "Access-Control-Max-Age,")
 				return known_header_enum::accept_ranges;
-			else if (val == "Age")
+			else if (v == "Age")
 				return known_header_enum::age;
-			else if (val == "Allow")
+			else if (v == "Allow")
 				return known_header_enum::allow;
-			else if (val == "Alt-Svc")
+			else if (v == "Alt-Svc")
 				return known_header_enum::alt_svc;
-			else if (val == "Cache-Control")
+			else if (v == "Cache-Control")
 				return known_header_enum::chache_control;
-			else if (val == "Connection")
+			else if (v == "Connection")
 				return known_header_enum::connection;
-			else if (val == "Content-Disposition")
+			else if (v == "Content-Disposition")
 				return known_header_enum::content_disposition;
-			else if (val == "Content-Encoding")
+			else if (v == "Content-Encoding")
 				return known_header_enum::content_encoding;
-			else if (val == "Content-Language")
+			else if (v == "Content-Language")
 				return known_header_enum::content_language;
-			else if (val == "Content-Length")
+			else if (v == "Content-Length")
 				return known_header_enum::content_length;
-			else if (val == "Content-Location")
+			else if (v == "Content-Location")
 				return known_header_enum::content_location;
-			else if (val == "Content-MD5")
+			else if (v == "Content-MD5")
 				return known_header_enum::content_md5;
-			else if (val == "Content-Range")
+			else if (v == "Content-Range")
 				return known_header_enum::content_range;
-			else if (val == "Content-Type")
+			else if (v == "Content-Type")
 				return known_header_enum::content_type;
-			else if (val == "Date")
+			else if (v == "Date")
 				return known_header_enum::date;
-			else if (val == "Delta-Base")
+			else if (v == "Delta-Base")
 				return known_header_enum::delta_base;
-			else if (val == "ETag")
+			else if (v == "ETag")
 				return known_header_enum::etag;
-			else if (val == "Expires")
+			else if (v == "Expires")
 				return known_header_enum::expires;
-			else if (val == "IM")
+			else if (v == "IM")
 				return known_header_enum::im;
-			else if (val == "Last-Modified")
+			else if (v == "Last-Modified")
 				return known_header_enum::last_modified;
-			else if (val == "Link")
+			else if (v == "Link")
 				return known_header_enum::link;
-			else if (val == "Location")
+			else if (v == "Location")
 				return known_header_enum::location;
-			else if (val == "P3P")
+			else if (v == "P3P")
 				return known_header_enum::p3p;
-			else if (val == "Pragma")
+			else if (v == "Pragma")
 				return known_header_enum::pragma;
-			else if (val == "Preference-Applied")
+			else if (v == "Preference-Applied")
 				return known_header_enum::preference_applied;
-			else if (val == "Proxy-Authenticate")
+			else if (v == "Proxy-Authenticate")
 				return known_header_enum::proxy_authenticate;
-			else if (val == "Public-Key-Pins")
+			else if (v == "Public-Key-Pins")
 				return known_header_enum::public_key_pins;
-			else if (val == "Retry-After")
+			else if (v == "Retry-After")
 				return known_header_enum::retry_after;
-			else if (val == "Server")
+			else if (v == "Server")
 				return known_header_enum::server;
-			else if (val == "Set-Cookie")
+			else if (v == "Set-Cookie")
 				return known_header_enum::set_cookie;
-			else if (val == "Strict-Transport-Security")
+			else if (v == "Strict-Transport-Security")
 				return known_header_enum::strict_transport_security;
-			else if (val == "Tk")
+			else if (v == "Tk")
 				return known_header_enum::trailer;
-			else if (val == "Trailer")
+			else if (v == "Trailer")
 				return known_header_enum::transfer_encoding;
-			else if (val == "Transfer-Encoding")
+			else if (v == "Transfer-Encoding")
 				return known_header_enum::tk;
-			else if (val == "Upgrade")
+			else if (v == "Upgrade")
 				return known_header_enum::upgrade;
-			else if (val == "Vary")
+			else if (v == "Vary")
 				return known_header_enum::vary;
-			else if (val == "Via")
+			else if (v == "Via")
 				return known_header_enum::via;
-			else if (val == "Warning")
+			else if (v == "Warning")
 				return known_header_enum::warning;
-			else if (val == "WWW-Authenticate")
+			else if (v == "WWW-Authenticate")
 				return known_header_enum::www_authenticate;
-			else if (val == "X-Frame-Options")
+			else if (v == "X-Frame-Options")
 				return known_header_enum::x_frame_options;
 			else
 				return known_header_enum::unknown;
@@ -224,13 +222,13 @@ namespace http
 
 #pragma endregion
 
-		response_header() : __key {}, __value {} { }
-		response_header(response_header const& o) : __key { o.__key }, __value { o.__value } { }
-		response_header(response_header&& o) : __key { o.__key }, __value { o.__value } { }
-		response_header(std::string key, std::string value) : __key { key }, __value { value } { }
+		response_header()						  = default;
+		response_header(response_header const& o) = default;
+		response_header(response_header&& o)	  = default;
+		response_header(std::string_view key, std::string_view value) : __key { key }, __value { value } { }
 
-		inline std::string key() const { return __key; }
-		inline std::string value() const { return __value; }
+		std::string_view key() const { return __key; }
+		std::string_view value() const { return __value; }
 
 	private:
 		std::string __key;
